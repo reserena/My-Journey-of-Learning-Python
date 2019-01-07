@@ -16,10 +16,7 @@ class countInv:
         if lofa == 1:
             return a, 0
         else:
-#            if lofa%2 == 0:    
-#                mid = int(lofa/2)
-#            else:
-#                mid = int((lofa+1)/2)
+
             mid = round(lofa/2)
             left, x = self.divide(a[:mid])
             right, y = self.divide(a[mid:])
