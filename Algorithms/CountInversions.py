@@ -7,19 +7,26 @@ Created on Wed Dec  5 08:04:59 2018
 ##Using the same algorithm as MergeSort
 ##Example:
 ##Input: [5,1,3,6,2,4]
-##Output: [1,2,3,4,5,6], 7 (the 7 is the # of inversion)
+##Output: 7
 
 class countInv:
     
-    def divide(self, a):
+    #counting function added on 1/8
+    def counting(self, original):
+        
+        a = original.copy()
+        
+        return self.__divide(a)[1]
+    
+    def __divide(self, a):
         lofa = len(a)
         if lofa == 1:
             return a, 0
         else:
 
             mid = round(lofa/2)
-            left, x = self.divide(a[:mid])
-            right, y = self.divide(a[mid:])
+            left, x = self.__divide(a[:mid])
+            right, y = self.__divide(a[mid:])
             count = x + y
             
             return self.__merge_and_count(left, right, count)
@@ -46,4 +53,7 @@ class countInv:
         
         if j < clen:
             return output+c[j:], cinv
-            
+                
+##test
+test = [5,1,3,6,2,4]
+countInv().counting(test)
