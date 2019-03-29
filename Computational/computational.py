@@ -6,7 +6,15 @@ Created on Wed Mar 20 20:52:00 2019
 """
 
 '''Assembly of all the function ever written for the projects in 
-Computational Finance MGMTMFE405 course'''
+Computational Finance MGMTMFE405 course
+Topics include:
+1. Random number generators
+2. Simulate geometric brownian motion (stock price)
+3. Jump diffusion modeling
+4. Interest rate modeling (Vasicek, CIR, etc)
+5. Binomial/Trinomial tree modeling for option pricing
+6. Least-square monte-carlo
+and more'''
 
 #-------------------------most used------------------------------------------#
 import numpy as np
