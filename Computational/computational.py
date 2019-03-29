@@ -14,7 +14,7 @@ Topics include:
 4. Interest rate modeling (Vasicek, CIR, etc)
 5. Binomial/Trinomial tree modeling for option pricing
 6. Least-square monte-carlo
-and more'''
+and more...'''
 
 #-------------------------most used------------------------------------------#
 import numpy as np
