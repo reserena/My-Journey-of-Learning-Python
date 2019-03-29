@@ -328,26 +328,3 @@ if __name__ == "__main__":
     plt.legend(['actual','model'])
     plt.title('Multilayer Perception - Spread')
     
-    from sklearn.metrics import r2_score
-#----------------------------old version---------------------------------#
-#def checkdate(d):
-#    if (d.month == 1) and (d.day == 1): ##New Year
-#        return False
-#    elif (d.month == 1) and (d.weekday() == 0) and ((d.day >= 15) or (d.day <= 21)):
-#        return False #Martin Luther Day
-#    elif (d.month == 2) and (d.weekday() == 0) and ((d.day >= 15) or (d.day <= 21)):
-#        return False #President day
-#    elif (d.month == 4) and (d.weekday() == 4) and 
-#        return False #Good Friday
-#    elif (d.month == 5) and (d.weekday() == 0) and ((d.day >= 25) or (d.day <= 31)):
-#        return False #Memorial day
-#    elif (d.month == 7) and (d.day == 4):
-#        return False #Independence day
-#    elif (d.month == 9) and (d.weekday() == 0) and ((d.day >= 1) or (d.day <= 7)):
-#        return False #Labor day
-#    elif (d.month == 11) and (d.weekday() == 3) and ((d.day >= 22) or (d.day <= 28)):
-#        return False #Thanksgiving
-#    elif (d.month == 12) and (d.day == 25):
-#        return False
-#    else:
-#        return True
