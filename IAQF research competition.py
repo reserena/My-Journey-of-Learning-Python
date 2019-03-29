@@ -11,76 +11,6 @@ import matplotlib.pyplot as plt
 import origin
 import itertools
 
-class tradingdates:
-    
-    def __init__(self, df, date_col = None):
-        try:
-            self.df = df.sort_values(by = df.columns[0])
-        except:
-            print("Input df is not dataframe")
-            return None
-        
-        self.dcol = date_col
-    
-    def holidays(self):
-        '''a is the start date; b is the end date
-        this function return a dataset with all holiday dates'''
-        from dateutil import rrule
-        
-        if self.dcol == None:
-            a = self.df.iloc[0,0]
-            b = self.df.iloc[-1,0]
-            try:
-                a.week
-            except:
-                print("Default DATE column must be the first column")
-                return None
-        elif type(self.dcol) == str:
-            try:
-                a = min(self.df[self.dcol])
-                b = max(self.df[self.dcol])
-            except:
-                print("date_col does not exist in df")
-                return None
-        else:
-            print("Invalid date_col argument. Must be str")
-            return None
-            
-        rs = rrule.rruleset()
-    
-        # Include all potential holiday observances
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 1, bymonthday= 1))                     # New Years Day  
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 1, byweekday= rrule.MO(3)))            # Martin Luther King Day   
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 2, byweekday= rrule.MO(3)))            # Washington's Birthday
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, byeaster= -2))                                  # Good Friday
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 5, byweekday= rrule.MO(-1)))           # Memorial Day
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 7, bymonthday= 4))                     # Independence Day
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth= 9, byweekday= rrule.MO(1)))            # Labor Day
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth=11, byweekday= rrule.TH(4)))            # Thanksgiving Day
-        rs.rrule(rrule.rrule(rrule.YEARLY, dtstart=a, until=b, bymonth=12, bymonthday=25))                     # Christmas  
-        
-        # Exclude potential holidays that fall on weekends
-        rs.exrule(rrule.rrule(rrule.WEEKLY, dtstart=a, until=b, byweekday=(rrule.SA,rrule.SU)))
-    
-        return rs
-
-#    def filled(self, missing = None, isna = False):
-#        rs = list(self.nontradingdays(self))
-#        
-#        if self.dcol == None:
-#            col = self.df.columns[0]
-#        else:
-#            col = self.dcol
-#        
-#        if missing != None:
-#            m = missing
-#        
-#        holidays = []
-#        for i in range(0, len(self.df)):
-#            if self.df.loc[i, col] in rs:
-#                holidays.append(i)
-#            elif 
-                
 def multimerge(dfs, on, how):
     
     if type(dfs) != list:
@@ -271,6 +201,7 @@ if __name__ == "__main__":
     ##factor 11: vwretd; factor 12: DGS10^2
     ##factor 13: lever1; factor 14: lever2
     ##factor 15: stress; factor 16: lagged spread 
+    
     from sklearn.linear_model import LinearRegression
     from sklearn.linear_model import Lasso
     from sklearn.ensemble import GradientBoostingRegressor
@@ -322,10 +253,10 @@ if __name__ == "__main__":
             sm = LinearRegression().fit(x_train, y_train)
             score_sm = sm.score(x_test, y_test)
             train_sm = sm.score(x_train, y_train)
-    #        '''Lasso Regression'''
-    #        lasso = Lasso().fit(x_train, y_train)
-    #        score_ls = lasso.score(x_test, y_test)
             
+            '''Lasso Regression'''
+            lasso = Lasso().fit(x_train, y_train)
+            score_ls = lasso.score(x_test, y_test)
             
             '''Gradient Boosted'''
             clf = GradientBoostingRegressor().fit(x_train, y_train)   
@@ -343,20 +274,14 @@ if __name__ == "__main__":
                                  random_state = 0).fit(x_train, y_train)
             score_n = nnclf.score(x_test, y_test)
             train_n = nnclf.score(x_train, y_train)
-#            
-#            [score_sm, score_gb, score_rf, score_n]
-#            '''PCA'''
-#            from sklearn.decomposition import PCA
-#            pca = PCA(n_components = 6).fit(full.iloc[:,2:])
+
             allr2[str(c)] = [score_sm, score_gb, score_rf, score_n]
             allf[str(c)] = full.columns[factorcol+1].tolist()
             
-    #            loop += 1
             if max([score_sm, score_gb, score_rf, score_n]) > r2:
                 r2 = max([score_sm, score_gb, score_rf, score_n])
                 features = full.columns[factorcol+1].tolist()
-#            plt.plot(full.iloc[:,[1,10]])
-#            plt.legend(['spread','sp500'])
+
     '''Summary of R2'''
     #[full.columns[factorcol+1].tolist(),[score_sm, score_ls, score_gb, score_rf, score_n]]
  
